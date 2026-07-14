@@ -1,7 +1,12 @@
 # Programação Orientada a Objetos com Python 🏛️ 
+
+---
+
 ## Sobre 
 Este repositório é dedicado aos meus estudos de **Programação Orientada a Objetos (POO)** utilizando Python. Aqui contem exemplos, exercícios e projetos desenvolvidos ao longo do aprendizado, documentando minha evolução e a aplicação dos principais conceitos da programação orientada a objetos. 
+
 ---
+
 ## Conteúdos Estudados 
 ### Fundamentos da POO 
 
