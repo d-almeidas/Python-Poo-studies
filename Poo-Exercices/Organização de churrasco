@@ -1,0 +1,37 @@
+from rich import print
+from rich.panel import Panel
+from rich.traceback import install
+install()
+
+class Churrasco():
+    def __init__(self, titulo, amigos):
+        self.titulo=titulo
+        self.amigos=amigos
+        
+    def calculos(self):
+        contador=self.amigos
+        quantidade_de_carne=contador*0.4 #kg
+        dinheiro=quantidade_de_carne*82.40
+        valor_por_pessoa=dinheiro/self.amigos
+        
+        return quantidade_de_carne,dinheiro, valor_por_pessoa
+        
+    def analisar(self):
+        quantidade_de_carne, dinheiro , valor_por_pessoa = self.calculos()
+        
+        texto= f'Analisando [green]{self.titulo}[/] com [blue]{self.amigos} convidados[/]\n'
+        texto+='cada participante comerá 0.4Kg de carne e cada Kg custa: R$82.40\n'
+        texto+= f"Recomendo comprar [blue]{quantidade_de_carne:.1f}Kg[/] de carne \n"
+        texto+= f"O custo total sera de [green]R$ {dinheiro:.2f}[/] \n"
+        texto+= f"Cada pessoa pagara [yellow]R$ {valor_por_pessoa:.2f}[/] \n"
+        lista=Panel(texto, title=self.titulo, width= 45)
+        print(lista)
+        
+c1= Churrasco('Amigos', 15)
+c1.analisar()
+
+
+
+
+# consumo: 400g p/pessoa
+# preço: 82,40

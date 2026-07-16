@@ -8,20 +8,12 @@ class Produto:
         self.preco = preco
 
     def etiqueta(self):
-        texto = Align.center(
-            f"[bold cyan]{self.nome}[/bold cyan]\n"
-            f"[dim]{'=' * 25}[/dim]\n"
-            f"[bold green]R$ {self.preco:,.2f}[/bold green]"
-        )
-
-        painel = Panel(
-            texto,
-            title="ETIQUETA",
-            title_align="center",
-            width=30
-        )
-
-        print(painel)
+        conteudo= f"{self.nome.center(30, ' ')}"
+        conteudo += f"{'-'*30}"
+        precof = f"R${self.preco:,.2f}"
+        conteudo += f"{precof.center(30,'.')}"
+        etiqueta= Panel(conteudo, title='Produto', width=34)
+        print(etiqueta)
 
 p1 = Produto('Bola',79.99)
 p1.etiqueta()
