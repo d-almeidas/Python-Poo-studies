@@ -26,10 +26,11 @@ class Churrasco():
         texto+= f"Cada pessoa pagara [yellow]R$ {valor_por_pessoa:.2f}[/] \n"
         lista=Panel(texto, title=self.titulo, width= 45)
         print(lista)
-        
-c1= Churrasco('Amigos', 15)
-c1.analisar()
 
+titulo_do_Churras=str(input('Digite o titulo do churras: '))
+amigos=int(input('Quantos amigos vão: '))
+c1=Churrasco(titulo=titulo_do_Churras, amigos=amigos)
+c1.analisar()
 
 
 
