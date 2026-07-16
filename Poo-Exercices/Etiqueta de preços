@@ -1,0 +1,27 @@
+from rich import print
+from rich.panel import Panel
+from rich.align import Align
+
+class Produto:
+    def __init__(self, nome, preco):
+        self.nome = nome
+        self.preco = preco
+
+    def etiqueta(self):
+        texto = Align.center(
+            f"[bold cyan]{self.nome}[/bold cyan]\n"
+            f"[dim]{'=' * 25}[/dim]\n"
+            f"[bold green]R$ {self.preco:,.2f}[/bold green]"
+        )
+
+        painel = Panel(
+            texto,
+            title="ETIQUETA",
+            title_align="center",
+            width=30
+        )
+
+        print(painel)
+
+p1 = Produto('Bola',79.99)
+p1.etiqueta()
