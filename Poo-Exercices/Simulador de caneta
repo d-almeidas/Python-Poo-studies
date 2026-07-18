@@ -1,0 +1,49 @@
+from rich import print
+
+class Caneta():
+    def __init__(self):
+        self.cor="white"
+        self.destampada=False
+        self.mensagens_acumuladas=[]
+   
+        
+    def escolhas(self):
+        while True:
+            qual_cor=str(input('Digite a cor que deseja: '))
+            self.cor=qual_cor
+            
+            quer_destampar=str(input('Deseja destampar a caneta [S/N]: ')).upper()
+            if quer_destampar=='N':
+                self.tampar()
+            else:
+                self.destampar()
+                
+            mensagem=str(input('Digite a mensagem: '))
+            self.mensagens_acumuladas.append((self.cor, mensagem))
+            
+            quer_continuar=str(input('Quer continuar modificando? [S/N]: ')).upper()
+            if quer_continuar=='N':
+                for cor, texto in self.mensagens_acumuladas:
+                    print(f'[{cor}]{texto}[/]')
+                    
+                break
+            else:
+                continue
+                
+        
+    def destampar(self):
+        self.destampada=True
+        
+    def tampar(self):
+        self.destampada=False
+    
+    def escrever(self, msg):
+        if self.destampada:
+            print(f'[{self.cor}] {msg} [/]' )
+        else:
+            print(f'A [blue]Caneta[/] esta tampada' )
+            
+
+c1=Caneta()
+c1.escolhas()
+        
