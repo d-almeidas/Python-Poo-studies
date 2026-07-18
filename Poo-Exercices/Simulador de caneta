@@ -9,7 +9,7 @@ class Caneta():
         
     def escolhas(self):
         while True:
-            qual_cor=str(input('Digite a cor que deseja: '))
+            qual_cor=str(input('Digite a cor que deseja: '))  # Digite em ingles
             self.cor=qual_cor
             
             quer_destampar=str(input('Deseja destampar a caneta [S/N]: ')).upper()
@@ -19,8 +19,10 @@ class Caneta():
                 self.destampar()
                 
             mensagem=str(input('Digite a mensagem: '))
-            self.mensagens_acumuladas.append((self.cor, mensagem))
-            
+            if self.destampada:
+                self.mensagens_acumuladas.append((self.cor, mensagem))
+            else:
+                print('[red] A caneta esta tampada[/]')
             quer_continuar=str(input('Quer continuar modificando? [S/N]: ')).upper()
             if quer_continuar=='N':
                 for cor, texto in self.mensagens_acumuladas:
@@ -36,13 +38,7 @@ class Caneta():
         
     def tampar(self):
         self.destampada=False
-    
-    def escrever(self, msg):
-        if self.destampada:
-            print(f'[{self.cor}] {msg} [/]' )
-        else:
-            print(f'A [blue]Caneta[/] esta tampada' )
-            
+
 
 c1=Caneta()
 c1.escolhas()
