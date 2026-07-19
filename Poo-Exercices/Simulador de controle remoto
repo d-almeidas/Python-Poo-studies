@@ -1,0 +1,113 @@
+from rich import print
+from rich.panel import Panel
+import os 
+
+class ControleRemoto():
+    def __init__(self):
+        self.canais=[1,2,3,4,5]
+        self.canal_atual=0
+        self.tv_ligada=False
+        self.volume=4
+        
+    def canal(self):
+        texto='[red]CONTROLE REMOTO[/]\n' 
+        texto+='-'*23
+        texto+='\n'
+        texto+='[blue]@: Liga/Desligar[/]\n'
+        texto+='[green]?: Comando de ajuda[/]\n'
+        texto+='0: Sair'  
+        self.painel_da_tv=Panel(texto, title='TV',width=27)
+        print(self.painel_da_tv)
+        
+    def limpar_tela(self):
+        os.system('cls')
+        
+    def ligar(self):
+        while True:
+            self.comando=input('< CH1 >    -  VOL2 + ').upper()  #---> @ para ligar/desligar a tv /0 para sair do programa
+            if self.comando == '0':
+                print('[green]Volte sempre[/]')
+                break
+            
+            elif self.comando=='@' and self.tv_ligada==False:
+                self.tv_ligada=True
+                self.mostrar_tv()
+        
+                
+            elif self.comando=='>' and self.tv_ligada:
+                self.avancar_canal()
+                self.mostrar_tv()
+            
+            elif self.comando=='<' and self.tv_ligada:
+                self.voltar_canal()
+                self.mostrar_tv()
+              
+            elif self.comando=='+' and self.tv_ligada:
+                self.aumentar_volume()
+                self.mostrar_tv()
+                
+            elif self.comando=='-' and self.tv_ligada:
+                self.diminuir_volume()
+                self.mostrar_tv()
+            
+            elif self.comando=='?' and self.tv_ligada:
+                self.menu_help()
+                
+            elif self.tv_ligada==True and self.comando=='@':
+                self.desligar()
+                self.tv_ligada=False
+            
+    
+    def menu_help(self):
+        painelhelp=('>  [blue]→ próximo canal[/]\n')
+        painelhelp+=('<  [blue]→ canal anterior[/]\n')
+        painelhelp+=('+  [blue]→ aumenta volume[/]\n')
+        painelhelp+=('-  [blue]→ diminui volume[/]\n')
+        painelhelp+=('@  [blue]→ desliga[/]\n')
+        painelhelp+=('0  [blue]→ sai do programa[/]\n')
+        painel=Panel(painelhelp,title='Ajuda_TV',width=30)
+        print(painel)
+            
+    def mostrar_tv(self):
+        self.limpar_tela()
+        
+        
+        barra= "█" * self.volume + "░" * (10-self.volume)
+        
+        texto='📺 CANAL: '
+        for i,canal in enumerate(self.canais):
+            if i== self.canal_atual:
+                texto += f"[black on yellow]{canal}[/] "
+            else:
+                texto += f"{canal} "
+                
+        texto += f"\n🔊 VOLUME: {barra} {self.volume/10}"
+        painel = Panel(texto, title="[TV]", width=30)
+        print(painel)
+        
+    def desligar(self):
+            self.limpar_tela()
+            print(self.painel_da_tv)
+
+    def avancar_canal(self):
+        self.canal_atual+=1
+        if self.canal_atual > len(self.canais)-1:
+           self.canal_atual=0
+           
+    def voltar_canal(self):
+        self.canal_atual-=1
+        if self.canal_atual < 0:
+            self.canal_atual = len(self.canais) - 1
+            
+    def aumentar_volume(self):
+        if self.volume<10:
+            self.volume+=1
+    
+    def diminuir_volume(self):
+        if self.volume>0:
+            self.volume-=1
+                
+c1= ControleRemoto()
+c1.canal()
+c1.ligar()
+
