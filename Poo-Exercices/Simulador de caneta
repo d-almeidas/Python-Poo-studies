@@ -9,7 +9,7 @@ class Caneta():
         
     def escolhas(self):
         while True:
-            qual_cor=str(input('Digite a cor que deseja: '))  # Digite em ingles
+            qual_cor=str(input('Digite a cor que deseja: ')).lower  # Digite em ingles
             self.cor=qual_cor
             
             quer_destampar=str(input('Deseja destampar a caneta [S/N]: ')).upper()
