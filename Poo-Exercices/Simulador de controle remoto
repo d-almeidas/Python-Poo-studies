@@ -24,7 +24,7 @@ class ControleRemoto():
         
     def ligar(self):
         while True:
-            self.comando=input('< CH1 >    -  VOL2 + ').upper()  #---> @ para ligar/desligar a tv /0 para sair do programa
+            self.comando=input(f'< CH{self.canal_atual} >    -  VOL{self.volume} + ').upper()  #---> @ para ligar/desligar a tv /0 para sair do programa
             if self.comando == '0':
                 print('[green]Volte sempre[/]')
                 break
