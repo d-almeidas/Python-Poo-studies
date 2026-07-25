@@ -1,19 +1,25 @@
-# Programação Orientada a Objetos com Python 🏛️ 
+# Programação Orientada a Objetos em Python 🏛️
 
 ---
 
-## Sobre 
-Este repositório é dedicado aos meus estudos de **Programação Orientada a Objetos (POO)** utilizando Python. Aqui contem exemplos, exercícios e projetos desenvolvidos ao longo do aprendizado, documentando minha evolução e a aplicação dos principais conceitos da programação orientada a objetos. 
+## Sobre
+
+Este repositório documenta meus estudos em **Programação Orientada a Objetos (POO)** utilizando Python. Ele reúne exemplos, exercícios e projetos desenvolvidos ao longo da minha jornada de aprendizado, abordando tanto os conceitos fundamentais quanto suas aplicações práticas.
 
 ---
 
-## Conteúdos Estudados 
-### Fundamentos da POO 
+## Tópicos Estudados
+
+### Fundamentos da POO
 
 * Classes e Objetos
+* Atributos e Métodos
+* Construtores (`__init__`)
+* Herança
+* Abstração
 
 ---
+
 ## Tecnologias
-<img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white"> 
 
-
+<img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
