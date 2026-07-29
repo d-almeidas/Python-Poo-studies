@@ -1,0 +1,160 @@
+from rich import print
+from abc import ABC, abstractmethod
+from random import randint,choice
+from rich.panel import Panel
+from rich.table import Table
+
+class Personagem(ABC):
+    def __init__(self, nome):
+        self.nome=nome
+        self.vida_atual_jogador=100
+        self.vida_atual_inimigo=100
+        self.golpes_guerreiro=[
+                      {'nome':'Espada','dano':15},
+                      {'nome':'lança','dano':10},
+                      {'nome':'Investida','dano':30}
+                ]
+        self.golpes_mago=[
+                    {'nome':'Bola de fogo','dano':20},
+                    {'nome':'Bola de gelo','dano':10},
+                    {'nome':'Bola eletricas','dano':15}
+        ]
+        
+    def atacar(self, alvo, forca):
+        pass
+    
+    @abstractmethod
+    def Curar(self):
+        pass
+    
+class Guerreiro(Personagem):
+    def __init__(self, nome):
+        super().__init__(nome)
+        
+    def atacar(self, alvo, indice_golpe):
+        golpe_sorteado=self.golpes_guerreiro[indice_golpe]
+        forca_Do_Golpe=randint(0, golpe_sorteado['dano'])
+        
+        print ( f'{self.nome} tenou atacar o {alvo.nome} com {golpe_sorteado['nome']} de força {golpe_sorteado['dano']}, {alvo.nome} recebeu {forca_Do_Golpe} de dano!' )
+        self.vida_atual_jogador=self.vida_atual_jogador-forca_Do_Golpe
+        print(f'Vida atual de {alvo.nome}: {self.vida_atual_jogador}')
+        
+    def Curar(self):
+        curar_quantidade=randint(0,100)
+        print(f'{self.nome} curou: {curar_quantidade} de vida')
+        self.vida_atual_jogador=self.vida_atual_jogador+curar_quantidade
+        
+class Mago(Personagem):
+    def __init__(self, nome):
+        super().__init__(nome)
+        
+    def atacar(self, alvo, forca):
+        golpe_sorteado=choice(self.golpes_mago)
+        forca_Do_Golpe=randint(0,forca)
+        print ( f'{self.nome} tenou atacar o {alvo.nome} com {golpe_sorteado['nome']} de força {forca}, {alvo.nome} recebeu {forca_Do_Golpe} de dano!' )
+        
+    def Curar(self):
+        curar_quantidade=randint(0,100)
+        print(f'{self.nome} curou: {curar_quantidade} de vida')
+                
+
+def menu():
+    while True:
+        print('-'*15)
+        print('RPG'.center(15))
+        print('-'*15)
+        
+        print('[1] -> INICIAR')
+        print('[2] -> COMO JOGAR')
+        print('[3] -> SAIR')
+        opcao=int(input('Escolha uma opção: '))
+    
+        if opcao==3:
+            break
+    
+def Inimigo_painel_infos_Atual():
+    inimigo_msg=(f'Vida atual: \n')
+    inimigo_msg+=('\n')
+    inimigo_msg+=(f'Atacar: [1]\n')
+    inimigo_msg+=(f'Curar:  [2]\n')
+    informacoes_inimigo=Panel(inimigo_msg,width=25,height=7,title='inimigo')
+    print(informacoes_inimigo)
+    
+def Painel_infos_atual():
+    mensagem=(f'Vida atual: \n')
+    mensagem+=('\n')
+    mensagem+=(f'Atacar: [1]\n')
+    mensagem+=(f'Curar:  [2]\n')
+    mensagem+=(f'Inimigo infos: [3]')
+    informacoes=Panel(mensagem,width=25,height=7,title=jogador.nome)
+    print(informacoes)
+    
+def Tabela_Armas():
+    armas=Table(title='TABELA DE ARMAS')
+    armas.add_column('NOME')
+    armas.add_column('DANO')
+    armas.add_row("[1] Espadada", "15")
+    armas.add_row("[2] Lança", "10")
+    armas.add_row("[3] Investida", "30")
+    tabelas_armas_Atual=Panel(armas,width=29)
+    print(tabelas_armas_Atual)
+    
+def dados_De_jogo_guerreiro():
+    while True:
+        Painel_infos_atual()
+        seu_turno=int(input('Oque deseja fazer: '))
+        if seu_turno==1:
+            Tabela_Armas()
+            sua_arma=int(input('Qual arma deseja usar: '))
+            if sua_arma==1:
+                jogador.atacar(inimigo,0)
+            if sua_arma==2:
+                jogador.atacar(inimigo,1)
+            if sua_arma==3:
+                jogador.atacar(inimigo,2)
+                
+        if seu_turno==2:
+            jogador.Curar()
+        
+        if seu_turno==3:
+            Inimigo_painel_infos_Atual()
+   
+def Tabela_De_magias():
+    magias=Table(title='TABELA DE MAGIAS')
+    magias.add_column('NOME')
+    magias.add_column('DANO')
+    magias.add_row('[1] Bola de fogo','20')
+    magias.add_row('[2] Bolas de gelo','10')    
+    magias.add_row('[3] Bolas eletricas','15')
+    tabelas_magias_Atual=Panel(magias,width=35)
+    print(tabelas_magias_Atual)
+             
+def dados_de_jogo_mago():
+    Painel_infos_atual()
+    seu_turno=int(input('Oque deseja fazer: '))
+    if seu_turno==1:
+        Tabela_De_magias()
+        
+        
+
+
+Mago_ou_Guerreiro=int(input('[1] -> GUERREIRO\n'
+                            '[2] -> MAGO\n'
+                            'Escolha sua classe: '))
+
+if Mago_ou_Guerreiro==1:
+    nome=str(input('Digite o nome do seu guerreiro: '))
+    jogador=Guerreiro(nome)
+    inimigo=Mago('Malestrink')
+    dados_De_jogo_guerreiro()
+    
+elif Mago_ou_Guerreiro==2:
+    nome=str(input('Digite o nome do seu mago: '))
+    jogador=Mago(nome)
+    inimigo=Guerreiro('Beltran')
+    dados_de_jogo_mago()
+    
+
+
+
+
