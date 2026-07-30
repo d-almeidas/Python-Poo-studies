@@ -3,12 +3,15 @@ from abc import ABC, abstractmethod
 from random import randint,choice
 from rich.panel import Panel
 from rich.table import Table
+import os
+
+# Nao fiz tratamento de erro :p
 
 class Personagem(ABC):
     def __init__(self, nome):
+        self.turno_jogador=True
         self.nome=nome
-        self.vida_atual_jogador=100
-        self.vida_atual_inimigo=100
+        self.vida_atual=100
         self.golpes_guerreiro=[
                       {'nome':'Espada','dano':15},
                       {'nome':'lança','dano':10},
@@ -35,53 +38,51 @@ class Guerreiro(Personagem):
         golpe_sorteado=self.golpes_guerreiro[indice_golpe]
         forca_Do_Golpe=randint(0, golpe_sorteado['dano'])
         
-        print ( f'{self.nome} tenou atacar o {alvo.nome} com {golpe_sorteado['nome']} de força {golpe_sorteado['dano']}, {alvo.nome} recebeu {forca_Do_Golpe} de dano!' )
-        self.vida_atual_jogador=self.vida_atual_jogador-forca_Do_Golpe
-        print(f'Vida atual de {alvo.nome}: {self.vida_atual_jogador}')
+        print ( f'[green]{self.nome} tentou atacar o {alvo.nome} com {golpe_sorteado['nome']} de força {golpe_sorteado['dano']}, [yellow]{alvo.nome} recebeu {forca_Do_Golpe} de dano!' )
+        alvo.vida_atual=alvo.vida_atual-forca_Do_Golpe
+        print(f'[red]Vida atual de {alvo.nome}: {alvo.vida_atual}')
         
     def Curar(self):
-        curar_quantidade=randint(0,100)
+        curar_quantidade=randint(0,30)
+        self.vida_atual=self.vida_atual +curar_quantidade
+        
+        if self.vida_atual > 100:
+            self.vida_atual=100
+            
         print(f'{self.nome} curou: {curar_quantidade} de vida')
-        self.vida_atual_jogador=self.vida_atual_jogador+curar_quantidade
         
 class Mago(Personagem):
     def __init__(self, nome):
         super().__init__(nome)
         
-    def atacar(self, alvo, forca):
-        golpe_sorteado=choice(self.golpes_mago)
-        forca_Do_Golpe=randint(0,forca)
-        print ( f'{self.nome} tenou atacar o {alvo.nome} com {golpe_sorteado['nome']} de força {forca}, {alvo.nome} recebeu {forca_Do_Golpe} de dano!' )
+    def atacar(self, alvo, indice_golpe):
+        golpe_sorteado=self.golpes_mago[indice_golpe]
+        forca_Do_Golpe=randint(0,golpe_sorteado['dano'])
+        print ( f'[green]{self.nome} tentou atacar o {alvo.nome} com {golpe_sorteado['nome']} de força {golpe_sorteado['dano']}, [yellow]{alvo.nome} recebeu {forca_Do_Golpe} de dano!')
+        alvo.vida_atual=alvo.vida_atual-forca_Do_Golpe
+        print(f'Vida atual de {alvo.nome}: {alvo.vida_atual}')
         
     def Curar(self):
-        curar_quantidade=randint(0,100)
-        print(f'{self.nome} curou: {curar_quantidade} de vida')
-                
-
-def menu():
-    while True:
-        print('-'*15)
-        print('RPG'.center(15))
-        print('-'*15)
+        curar_quantidade=randint(0,30)
+        self.vida_atual=self.vida_atual+curar_quantidade
         
-        print('[1] -> INICIAR')
-        print('[2] -> COMO JOGAR')
-        print('[3] -> SAIR')
-        opcao=int(input('Escolha uma opção: '))
-    
-        if opcao==3:
-            break
-    
+        if self.vida_atual > 100:
+            self.vida_atual=100
+        print(f'{self.nome} curou: {curar_quantidade} de vida')
+            
+def limpar_tela():
+         os.system('cls' if os.name == 'nt' else 'clear')     
+
 def Inimigo_painel_infos_Atual():
-    inimigo_msg=(f'Vida atual: \n')
+    inimigo_msg=(f'Vida atual: {inimigo.vida_atual} \n')
     inimigo_msg+=('\n')
-    inimigo_msg+=(f'Atacar: [1]\n')
-    inimigo_msg+=(f'Curar:  [2]\n')
-    informacoes_inimigo=Panel(inimigo_msg,width=25,height=7,title='inimigo')
+    inimigo_msg+=(f'Atacar: \\[1]\n')
+    inimigo_msg+=(f'Curar:  \\[2]\n')
+    informacoes_inimigo=Panel(inimigo_msg,width=25,height=7,title=inimigo.nome)
     print(informacoes_inimigo)
     
 def Painel_infos_atual():
-    mensagem=(f'Vida atual: \n')
+    mensagem=(f'Vida atual: {jogador.vida_atual} \n')
     mensagem+=('\n')
     mensagem+=(f'Atacar: [1]\n')
     mensagem+=(f'Curar:  [2]\n')
@@ -100,25 +101,59 @@ def Tabela_Armas():
     print(tabelas_armas_Atual)
     
 def dados_De_jogo_guerreiro():
+    jogador.turno_jogador=True
+    
     while True:
-        Painel_infos_atual()
-        seu_turno=int(input('Oque deseja fazer: '))
-        if seu_turno==1:
-            Tabela_Armas()
-            sua_arma=int(input('Qual arma deseja usar: '))
-            if sua_arma==1:
-                jogador.atacar(inimigo,0)
-            if sua_arma==2:
-                jogador.atacar(inimigo,1)
-            if sua_arma==3:
-                jogador.atacar(inimigo,2)
+        if jogador.turno_jogador:   
+            limpar_tela()
+            Painel_infos_atual()
+            seu_turno=int(input('Oque deseja fazer: '))
+            if seu_turno==1:
+                limpar_tela()
+                Tabela_Armas()
+                sua_arma=int(input('Qual arma deseja usar: '))
+                if sua_arma==1:
+                    jogador.atacar(inimigo,0)
+                if sua_arma==2:
+                    jogador.atacar(inimigo,1)
+                if sua_arma==3:
+                    jogador.atacar(inimigo,2)
                 
-        if seu_turno==2:
-            jogador.Curar()
-        
-        if seu_turno==3:
-            Inimigo_painel_infos_Atual()
-   
+                input('Pressione: ENTER para continuar... ')
+                
+            if seu_turno==2:
+                jogador.Curar()
+                input('Pressione: ENTER para continuar... ')
+                continue
+                
+            if seu_turno==3:
+                Inimigo_painel_infos_Atual()
+                input('Pressione: ENTER para continuar... ')
+                continue
+            if inimigo.vida_atual <= 0:
+                inimigo.vida_atual=0
+                print(f'Parabens {jogador.nome}!!!, vc derroutou a forca maligna {inimigo.nome} ')
+                break
+            if jogador.vida_atual <= 0:
+                jogador.vida_atual=0
+                print(f'Infelizmente vc foi dominado pelas forcas malignas de {inimigo.nome} ')
+                break
+            jogador.turno_jogador=False
+            
+        else:
+            numero=randint(1,2)
+            
+            if numero==1:
+                inimigo.Curar()
+                jogador.turno_jogador=True
+                
+            if numero==2:
+                golpe_aleatorio = randint(0, 2)
+                inimigo.atacar(jogador, golpe_aleatorio)
+                jogador.turno_jogador=True
+            
+            input('Pressione: ENTER para continuar... ')
+            
 def Tabela_De_magias():
     magias=Table(title='TABELA DE MAGIAS')
     magias.add_column('NOME')
@@ -130,30 +165,100 @@ def Tabela_De_magias():
     print(tabelas_magias_Atual)
              
 def dados_de_jogo_mago():
-    Painel_infos_atual()
-    seu_turno=int(input('Oque deseja fazer: '))
-    if seu_turno==1:
-        Tabela_De_magias()
+    jogador.turno_jogador=True
+    
+    while True: 
+        limpar_tela()
+        Painel_infos_atual()
+        seu_turno=int(input('Oque deseja fazer: '))
+        if seu_turno==1:
+            limpar_tela()
+            Tabela_De_magias()
+            sua_magia=int(input('Qual magia deseja usar: '))
+            if sua_magia==1:
+                jogador.atacar(inimigo,0)
+            if sua_magia==2:
+                jogador.atacar(inimigo,1)
+            if sua_magia==3:
+                jogador.atacar(inimigo,2)
+                
+                input('Pressione: ENTER para continuar... ')
         
+            
+            if seu_turno==2:
+                jogador.Curar()
+                input('Pressione: ENTER para continuar... ')
+                continue
         
+            if seu_turno==3:
+                limpar_tela()
+                Inimigo_painel_infos_Atual()
+                input('Pressione: ENTER para continuar... ')
+                continue
+            
+            if inimigo.vida_atual <= 0:
+                inimigo.vida_atual=0
+                print(f'Parabens {jogador.nome}!!!, vc derroutou a forca maligna {inimigo.nome} ')
+                break
+            if jogador.vida_atual <= 0:
+                jogador.vida_atual=0
+                print(f'Infelizmente vc foi dominado pelas forcas malignas de {inimigo.nome} ')
+                break
+            jogador.turno_jogador=False
+            
+        else:
+            numero=randint(1,2)
+                    
+            if numero==1:
+                inimigo.Curar()
+                jogador.turno_jogador=True
+                            
+            if numero==2:
+                golpe_aleatorio = randint(0, 2)
+                inimigo.atacar(jogador, golpe_aleatorio)
+                jogador.turno_jogador=True
 
-
-Mago_ou_Guerreiro=int(input('[1] -> GUERREIRO\n'
+            input('Pressione: ENTER para continuar... ')
+            
+def menu():
+    global jogador,inimigo
+    
+    while True:
+        print('-'*15)
+        print('RPG'.center(15))
+        print('-'*15)
+        
+        print('[1] -> INICIAR')
+        print('[2] -> COMO JOGAR')
+        print('[3] -> SAIR')
+        opcao=int(input('Escolha uma opção: '))
+        
+        if opcao==1:
+            limpar_tela()
+            Mago_ou_Guerreiro=int(input('[1] -> GUERREIRO\n'
                             '[2] -> MAGO\n'
                             'Escolha sua classe: '))
 
-if Mago_ou_Guerreiro==1:
-    nome=str(input('Digite o nome do seu guerreiro: '))
-    jogador=Guerreiro(nome)
-    inimigo=Mago('Malestrink')
-    dados_De_jogo_guerreiro()
-    
-elif Mago_ou_Guerreiro==2:
-    nome=str(input('Digite o nome do seu mago: '))
-    jogador=Mago(nome)
-    inimigo=Guerreiro('Beltran')
-    dados_de_jogo_mago()
-    
+            if Mago_ou_Guerreiro==1:
+                nome=str(input('Digite o nome do seu guerreiro: '))
+                jogador=Guerreiro(nome)
+                inimigo=Mago('Malestrink')
+                limpar_tela()
+                dados_De_jogo_guerreiro()
+                
+            elif Mago_ou_Guerreiro==2:
+                nome=str(input('Digite o nome do seu mago: '))
+                jogador=Mago(nome)
+                inimigo=Guerreiro('Beltran')
+                limpar_tela()
+                dados_de_jogo_mago()
+                
+        if opcao==2:
+            print('Voce podera escolher jogar com 2 classes, Guerreiro ou Mago, funciona como um sistema de turnos no qual vc realiza sua acao e dps o inimigo a dele, acaba quem ficar com a vida menor ou igual a 0')
+        if opcao==3:
+            break
+
+menu()
 
 
 
