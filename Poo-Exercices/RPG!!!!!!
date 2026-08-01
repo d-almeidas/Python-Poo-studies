@@ -167,22 +167,23 @@ def Tabela_De_magias():
 def dados_de_jogo_mago():
     jogador.turno_jogador=True
     
-    while True: 
-        limpar_tela()
-        Painel_infos_atual()
-        seu_turno=int(input('Oque deseja fazer: '))
-        if seu_turno==1:
+    while True:
+        if jogador.turno_jogador:
             limpar_tela()
-            Tabela_De_magias()
-            sua_magia=int(input('Qual magia deseja usar: '))
-            if sua_magia==1:
-                jogador.atacar(inimigo,0)
-            if sua_magia==2:
-                jogador.atacar(inimigo,1)
-            if sua_magia==3:
-                jogador.atacar(inimigo,2)
-                
-                input('Pressione: ENTER para continuar... ')
+            Painel_infos_atual()
+            seu_turno=int(input('Oque deseja fazer: '))
+            if seu_turno==1:
+                limpar_tela()
+                Tabela_De_magias()
+                sua_magia=int(input('Qual magia deseja usar: '))
+                if sua_magia==1:
+                    jogador.atacar(inimigo,0)
+                if sua_magia==2:
+                    jogador.atacar(inimigo,1)
+                if sua_magia==3:
+                    jogador.atacar(inimigo,2)
+                    
+                    input('Pressione: ENTER para continuar... ')
         
             
             if seu_turno==2:
