@@ -259,7 +259,10 @@ def menu():
         if opcao==3:
             break
 
-menu()
+def main():
+    menu()
+if main() == '__main__':
+    main()
 
 
 
