@@ -184,7 +184,7 @@ def dados_de_jogo_mago():
                     jogador.atacar(inimigo,2)
                     
                     input('Pressione: ENTER para continuar... ')
-        
+            
             
             if seu_turno==2:
                 jogador.Curar()
