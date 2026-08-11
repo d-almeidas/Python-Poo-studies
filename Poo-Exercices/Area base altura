@@ -1,0 +1,53 @@
+from rich import print
+from rich import inspect
+
+class Retangulo():
+    def __init__(self, base=1, altura=1):
+        self.__base=base
+        self.__altura=altura
+        self.__area=self.__base*self.__altura
+        
+    @property
+    def base(self):
+        return self.__base
+    
+    @base.setter
+    def base(self, base):
+        self.__base=base
+        self.__area=self.__base*self.__altura
+        
+    @property
+    def altura(self):
+        return self.__altura   
+    
+    @altura.setter
+    def altura(self,altura):
+        self.__altura=altura
+        self.__area=self.__base*self.altura
+        
+    @property
+    def medidas(self):
+        print( f'Base= {self.__base}\n'f'Altura= {self.__altura}\n'f'Area= {self.__area}' )
+        
+    @medidas.setter
+    def medidas(self,valores):
+        base,altura=valores
+        self.__base=base
+        self.__altura=altura
+        self.__area=self.altura*self.base
+        
+    @property
+    def area(self):
+        return self.__area
+    
+    @area.setter
+    def area(self):
+        calc_area=self.__base*self.__altura
+        return calc_area
+
+ret=Retangulo()
+base=float(input('Digite a base do retangulo: '))
+ret.base=base
+altura=float(input('Digite a altura do retangulo: '))
+ret.altura=altura
+ret.medidas
