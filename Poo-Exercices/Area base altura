@@ -13,8 +13,9 @@ class Retangulo():
     
     @base.setter
     def base(self, base):
-        self.__base=base
-        self.__area=self.__base*self.__altura
+        if base > 0:
+            self.__base=base
+            self.__area=self.__base*self.__altura
         
     @property
     def altura(self):
@@ -22,8 +23,9 @@ class Retangulo():
     
     @altura.setter
     def altura(self,altura):
-        self.__altura=altura
-        self.__area=self.__base*self.altura
+        if altura > 0:
+            self.__altura=altura
+            self.__area=self.__base*self.altura
         
     @property
     def medidas(self):
