@@ -33,7 +33,7 @@ This repository documents my studies in **Object-Oriented Programming (OOP)** us
 
 ## Projects
 
-* **RPG Game (turn-based)** — a turn-based RPG built with OOP, featuring `Warrior` and `Mage` classes, inheritance, an abstract base class, a turn system, and a `rich`-powered interface for panels and tables.
+* **[RPG Game (turn-based)](https://github.com/d-almeidas/Python-Poo-studies/blob/main/Poo-Exercices/RPG!!!!!!.py)** — a turn-based RPG built with OOP, featuring `Warrior` and `Mage` classes, inheritance, an abstract base class, a turn system, and a `rich`-powered interface for panels and tables.
 
 ---
 
