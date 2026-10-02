@@ -1,5 +1,7 @@
 # Python Object-Oriented Programming 
 
+![](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbnZkbDhsZHNsMGszNmNtNHg5OWFkNjkyNDFiamtwZWU3ZDl2OGtzcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/LMt9638dO8dftAjtco/giphy.gif)
+
 ---
 
 ## About
